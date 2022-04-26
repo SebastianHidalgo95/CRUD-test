@@ -30,16 +30,16 @@ class EntriesController extends Controller
                 'date.required'=>'Se requiere una fecha', 
             ]);
             if ($validator->fails()){
-                return redirect()->back()->withErrors(true);
+                return redirect()->back()->with('error', $validator->errors()->first());
                 // return response()->json(['error'=>$validator->errors()->first()]);
             }
             $id = Auth::User()->id;
             $entry = MGEntry::create(array_merge($validator->validated(), ['user_id'=>$id]));
             $entry->save();
-            // return response()->json($entry);
-            return redirect()->back()->withErrors(false);
+            
+            return redirect()->back()->with('success', 'Entry created successfully');
         } catch (Exception $e) { 
-            return redirect()->back()->withErrors(true);
+            return redirect()->back()->with('error', 'Could not create entry');
                 
             // return response()->json(['error' => $e->getMessage()], 500);
         }   

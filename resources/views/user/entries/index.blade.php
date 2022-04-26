@@ -2,7 +2,6 @@
 @extends('adminlte::page')
 
 @section('title', 'Entries')
-
 @section('content_header')
 <h1>
     Entries
@@ -45,11 +44,12 @@
                                     data-toggle="modal" data-target="#modal-update-entry-{{$entry->_id}}"
                                     ><i class="far fa-edit"></i>
                                 </button>
+                                
                                 <form class="d-inline" action="{{ route('user.entries.delete', $entry->_id) }}" method="POST">
                                     {{ csrf_field() }}
                                     @method('DELETE')
                                     
-                                    <button class="btn btn-outline-danger">
+                                    <button class="btn btn-outline-danger" >
                                         Delete
                                     </button>
                                 </form>
@@ -61,13 +61,7 @@
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th>Rendering engine</th>
-                            <th>Browser</th>
-                            <th>Platform(s)</th>
-                            <th>Engine version</th>
-                            <th>CSS grade</th>
-                        </tr>
+                        
                     </tfoot>
                 </table>
             </div>
@@ -92,5 +86,44 @@ $(document).ready(function() {
         "order": [[ 3, "desc" ]]
     } );
 } );
+
+function deleteConfirmation(id) {
+        swal({
+            title: "Delete?",
+            text: "Please ensure and then confirm!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: !0
+        }).then(function (e) {
+
+            if (e.value === true) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url('/users')}}/" + id,
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'JSON',
+                    success: function (results) {
+
+                        if (results.success === true) {
+                            swal("Done!", results.message, "success");
+                        } else {
+                            swal("Error!", results.message, "error");
+                        }
+                    }
+                });
+
+            } else {
+                e.dismiss;
+            }
+
+        }, function (dismiss) {
+            return false;
+        })
+    }
+
 </script>
 @stop
