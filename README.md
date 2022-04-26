@@ -7,58 +7,109 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# CRUD - TEST
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+CRUD realizado en laravel para la gestion de entradas de actividades, el objeto entry es el principal y cuenta con la siguiente estructura. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+{ 
+    'name':VALUE,
+    'title': ...,
+    'text': ...,
+    'date': ...
+    'user_id': ...,
+}
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Comenzando 🚀
+```bash
+git clone https://github.com/SebastianHidalgo95/CRUD-test
 
-## Learning Laravel
+```
+### Moverse al directorio del proyecto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+cd CRUD-test
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Descargar Dependencias del Proyecto
 
-## Laravel Sponsors
+Como las dependencias del proyecto las maneja **composer** debemos ejecutar el comando:
+En este caso se instalaron usando composer 1.9.0
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+composer install
+```
+### Información 📋
 
-### Premium Partners
+_Que cosas necesitas para instalar el software y como instalarlas_
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```
+    Backend
+        - php ^7.31 
+        - Laravel ^8.75
+        
+        Important packages
 
-## Contributing
+        -jenssegers/mongodb for connection and relationships with mongo
+        -jeroennoten/laravel-adminlte for administration panel
+        -laravel/ui - for authentication 
+        -realrashid/sweet-alert - alerts management with swal
+        -bootstrap - for design
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    Database     
+        - MongodDB - for entries table
+        - postreSQL - for users table
+```
 
-## Code of Conduct
+### Configurar Entorno
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+La configuración del entorno se hace en el archivo **.env** pero esé archivo no se puede versionar según las restricciones del archivo **.gitignore**, igualmente en el proyecto hay un archivo de ejemplo  **.env.example** debemos copiarlo con el siguiente comando:
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Luego es necesario modificar los valores de las variables de entorno para adecuar la configuración a nuestro entorno de desarrollo, por ejemplo los parámetros de conexión a la base de datos.
 
-## License
+### Configurar la Conexión con la base de datos
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Vaya a la raiz de su proyecto y busque el archivo .env debe configurar las variables segun su conexion en el ejemplo utilizando xampp
+La base de datos que debe tener creada en su conexión con mysql debe ser tener el nombre 'db_crud_test' para este caso particular de postgresql y 'db_crud_mongo' para mongodb
+
+```bash
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=db_crud_test
+DB_USERNAME=postgres
+DB_PASSWORD=root
+
+MONGO_DB_HOST=127.0.0.1
+MONGO_DB_PORT=27017
+MONGO_DB_DATABASE=db_crud_mongo
+MONGO_DB_USERNAME=
+MONGO_DB_PASSWORD=
+```
+
+### Migrar la Base de Datos
+
+el proyecto ya tiene los modelos, migraciones. Entonces lo único que nos hace falta es ejecutar la migración y ejecutar el siguiente comando:
+
+```bash
+php artisan migrate:fresh
+```
+
+### Instalar modulos de npm
+
+Los paquetes utilizados para el frontend se instalan utilizando npm o yarn 
+
+```bash
+npm install
+```
+### Lanzar por primera vez
+Para realizar el primer lanzamiento debe tener su servidor corriendo para el backend, ya sea utilizando composer serve o xampp, tambien debe generar los archivos js mediante el comando
+
+```bash
+npm run dev
+``` 

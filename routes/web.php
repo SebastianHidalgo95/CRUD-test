@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/',['middleware' => ['auth'], function () {
     return view('auth.login');
-});
+}]);
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('user/entries', 'App\Http\Controllers\User\EntriesController@entries');
+    Route::get('user/entries', 'App\Http\Controllers\User\EntriesController@entries')->name('user.entries');;
     Route::post('user/create_entry', 'App\Http\Controllers\User\EntriesController@createEntry')
         ->name('user.entries.create');
     Route::get('user/get_all_entries', 'App\Http\Controllers\User\EntriesController@getAllEntries')
