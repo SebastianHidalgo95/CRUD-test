@@ -9,5 +9,5 @@ class MGEntry extends Moloquent
 {
     protected $collection = 'entries';
     protected $connection = 'mongodb';
-    protected $fillable = ["user_id", "text", "title", "date", "status"];
+    protected $fillable = ["user_id","name", "text", "title", "date", "status"];
 }
